@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 import { api } from './services/api'
 import AppHeader from './components/AppHeader.vue'
 
 const platforms = ref([]);
+let pollingInterval = null;
 
 const fetchPlatforms = async () => {
   try {
@@ -26,6 +27,16 @@ const statusColorClass = (status) => {
 
 onMounted(() => {
   fetchPlatforms();
+
+  pollingInterval = setInterval(() => {
+    fetchPlatforms();
+  }, 60000);
+});
+
+onUnmounted(() => {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+  }
 });
 </script>
 
