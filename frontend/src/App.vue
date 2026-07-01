@@ -42,31 +42,37 @@ onMounted(() => {
         :href="platform.url"
         target="_blank"
         rel="noopener noreferrer"
-        class="block p-6 rounded-2xl border-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl bg-gray-800"
+        class="block relative bg-gray-800 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden shadow-lg border border-gray-700/50"
       >
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-2xl font-bold">{{ platform.name }}</h2>
+        <div class="flex items-center justify-between mb-3">
           
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-400 capitalize">{{ platform.status }}</span>
+          <div class="flex items-center gap-3">
+            <img 
+              v-if="platform.icon" 
+              :src="platform.icon" 
+              :alt="platform.name + ' icon'"
+              class="w-8 h-8 object-contain rounded-md"
+            />
+            <h2 class="text-2xl font-bold tracking-tight">{{ platform.name }}</h2>
+          </div>
+          
+          <div class="flex items-center gap-3 text-sm">
+            <span class="text-gray-400 font-mono">v{{ platform.version }}</span>
             <span 
-              class="w-3.5 h-3.5 rounded-full" 
-              :class="statusColorClass(platform.status)"
+              class="w-4 h-4 rounded-full" 
+              :class="statusColorClass(platform.status, 'dot')"
             ></span>
           </div>
         </div>
         
-        <p class="text-gray-300 mb-6 line-clamp-2">{{ platform.description }}</p>
-        
-        <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold">
-          Versione {{ platform.version }}
-        </div>
+        <p class="text-gray-300 text-base line-clamp-2">{{ platform.description }}</p>
       </a>
 
     </main>
     
-    <div v-if="platforms.length === 0" class="text-center text-gray-500 mt-12">
-      <p>Nessuna piattaforma registrata al momento. In attesa di segnali nello spazio...</p>
+    <div v-if="platforms.length === 0" class="text-center text-gray-500 mt-12 px-6">
+      <p class="text-lg">Waiting for signals from space...</p>
+      <p class="text-sm mt-1">No platforms registered.</p>
     </div>
   
   </div>
