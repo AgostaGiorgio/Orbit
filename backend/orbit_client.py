@@ -5,7 +5,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 class OrbitClient:
-    def __init__(self, orbit_api_url: str, name: str, version: str, description: str, icon: str, app_url: str, ping_interval_seconds: int = 3600):
+    def __init__(self, orbit_api_url: str, name: str, version: str, description: str, app_url: str, icon: str = None, ping_interval_seconds: int = 3600):
         self.orbit_register_url = orbit_api_url
         
         self.payload = {
