@@ -4,11 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.di import Container
 from src.config.app_config import app_config
 
+from src.routers import router
+
 
 logger = logging.getLogger(__name__)
 
 container = Container()
-container.wire(modules=[])
+container.wire(modules=[router])
 
 app = FastAPI(title="Orbit API", version="1.0.0")
 
@@ -19,3 +21,5 @@ app.add_middleware(
     allow_methods=app_config.cors_allow_methods,
     allow_headers=app_config.cors_allow_headers,
 )
+
+app.include_router(router.api_router, prefix="/api/v1")
